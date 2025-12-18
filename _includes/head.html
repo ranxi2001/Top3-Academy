@@ -1,0 +1,47 @@
+<!-- 字符集和浏览器兼容性 -->
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="{{ page.description | default: site.description }}">
+<meta name="keywords" content="Web3, 区块链, 智能合约, Solidity, DApp, 去中心化应用, 教程">
+<meta name="author" content="Top3 Academy">
+
+<!-- Open Graph -->
+<meta property="og:title" content="{{ page.title }} | {{ site.title }}">
+<meta property="og:description" content="{{ page.description | default: site.description }}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ page.url | absolute_url }}">
+
+<!-- 页面标题 -->
+<title>{{ page.title }} | {{ site.title }}</title>
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="{{ '/assets/img/logo.png' | relative_url }}">
+<link rel="apple-touch-icon" href="{{ '/assets/img/logo.png' | relative_url }}">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- 站点样式表 -->
+<link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+
+<!-- 语法高亮 - Prism.js -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" id="prism-light">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+    id="prism-dark" disabled>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+<!-- 主题初始化脚本 (避免闪烁) -->
+<script>
+    (function () {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    })();
+</script>

@@ -1,52 +1,21 @@
 <!DOCTYPE html>
-<html lang="{{ site.lang | default: "en-US" }}">
+<html lang="{{ site.lang | default: 'zh-CN' }}">
+
 <head>
-  <!-- 设置字符集和浏览器兼容性 -->
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- 动态生成页面标题，显示站点标题和页面标题 -->
-  <title>{{ site.title }} | {{ page.title }}</title>
-
-  <!-- 引入站点样式表，并使用 GitHub 的构建版本进行缓存控制 -->
-  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
-
-  <!-- 添加语法高亮 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+  {% include head.html %}
 </head>
+
 <body>
-<!-- 页头部分，包含品牌标识和导航栏 -->
-<header>
-  <div class="container">
-    <div id="branding">
-      <h1><a href="{{ '/' | relative_url }}">{{ site.title }}</a></h1>
+  {% include header.html %}
+
+  <main>
+    <div class="container">
+      {{ content | md_to_html }}
     </div>
-    <!-- 导航栏，包含智能合约、链上交互、前端交互的链接 -->
-    <nav>
-      <ul>
-        <li><a href="{{ '/smart_contract/' | relative_url }}">智能合约</a></li>
-        <li><a href="{{ '/chain_interaction/' | relative_url }}">链上交互</a></li>
-        <li><a href="{{ '/Front-end_Interaction/' | relative_url }}">前端交互</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
+  </main>
 
-<!-- 主内容区域 -->
-<main>
-  <div class="container">
-    <!-- 动态插入页面内容 -->
-    {{ content | md_to_html }}
-  </div>
-</main>
-
-<!-- 页脚部分，显示版权信息和当前年份 -->
-<footer>
-  <div class="container">
-    <p>&copy; {{ site.time | date: '%Y' }} {{ site.title }}. Reprinting is prohibited. All rights reserved.</p>
-  </div>
-</footer>
+  {% include footer.html %}
+  {% include scripts.html %}
 </body>
+
 </html>

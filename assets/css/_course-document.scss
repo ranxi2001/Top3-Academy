@@ -1,34 +1,351 @@
+// ============================================
+// Course Document Layout
+// Responsive sidebar + content layout
+// ============================================
+
 .course-document {
   display: flex;
-  max-width: 1200px;
+  max-width: var(--container-max);
   margin: 0 auto;
-  padding: 2rem;
-  height: calc(100vh - 100px); // 假设头部和页脚总高度为100px，根据实际情况调整
+  padding: calc(var(--header-height) + 24px) 24px 40px;
+  min-height: 100vh;
+  gap: 40px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    padding: calc(var(--header-height) + 16px) 0 24px;
+    gap: 0;
+  }
 }
 
+// ============================================
+// Sidebar
+// ============================================
 .sidebar {
-  width: 250px;
-  min-width: 250px;
-  padding-right: 2rem;
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  position: sticky;
+  top: calc(var(--header-height) + 24px);
+  height: fit-content;
+  max-height: calc(100vh - var(--header-height) - 48px);
   overflow-y: auto;
-  height: 100%;
+  padding-right: 16px;
+
+  // Custom scrollbar
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+  }
+
+  @media (max-width: 768px) {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    bottom: 0;
+    width: var(--sidebar-width);
+    min-width: auto;
+    max-height: none;
+    height: calc(100vh - var(--header-height));
+    background: var(--bg-primary);
+    border-right: 1px solid var(--border-color);
+    z-index: 999;
+    padding: 24px;
+    transform: translateX(-100%);
+    transition: transform var(--transition), background-color var(--transition);
+
+    &.open {
+      transform: translateX(0);
+    }
+  }
+
+  h2 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin: 0 0 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+  }
 }
 
+.lesson-nav {
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    margin-bottom: 4px;
+
+    a {
+      display: block;
+      padding: 12px 16px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.95rem;
+      border-radius: var(--border-radius-sm);
+      transition: var(--transition);
+      line-height: 1.5;
+
+      &:hover {
+        color: var(--text-primary);
+        background: var(--bg-tertiary);
+      }
+    }
+
+    &.active a {
+      color: var(--primary);
+      background: rgba(99, 102, 241, 0.1);
+      font-weight: 500;
+    }
+  }
+}
+
+// Sidebar Toggle Button (Mobile)
+.sidebar-toggle {
+  display: none;
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 1000;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+  transition: var(--transition);
+
+  @media (max-width: 768px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+    fill: white;
+  }
+}
+
+// Overlay for mobile sidebar
+.sidebar-overlay {
+  display: none;
+
+  @media (max-width: 768px) {
+    display: block;
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+    z-index: 998;
+
+    &.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+// ============================================
+// Content Area
+// ============================================
 .content {
   flex: 1;
   min-width: 0;
-  overflow-y: auto;
-  height: 100%;
-  padding-right: 1rem;
+  padding: 0 16px;
+  background: var(--bg-primary);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  padding: 32px;
+
+  @media (max-width: 768px) {
+    padding: 24px 16px;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  >*:first-child {
+    margin-top: 0;
+  }
+
+  >*:last-child {
+    margin-bottom: 0;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    margin: 24px 0;
+
+    @media (max-width: 768px) {
+      margin: 16px 0;
+      border-radius: var(--border-radius-sm);
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 0.95rem;
+
+    @media (max-width: 768px) {
+      display: block;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    th,
+    td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    th {
+      background: var(--bg-tertiary);
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    td {
+      color: var(--text-secondary);
+    }
+
+    tr:hover td {
+      background: var(--bg-secondary);
+    }
+  }
 }
 
-// 确保图片不会超出内容区域
-.content img {
-  max-width: 100%;
-  height: auto;
+// ============================================
+// Lesson Footer
+// ============================================
+.lesson-footer {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  .edit-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: var(--transition);
+
+    &:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      text-decoration: none;
+    }
+  }
 }
 
-// 移除内容区域的默认上边距
-.content > *:first-child {
-  margin-top: 0;
+// ============================================
+// Pagination
+// ============================================
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-color);
+  gap: 16px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 24px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+
+    &:hover {
+      border-color: var(--primary);
+      color: var(--text-primary);
+      transform: translateX(0);
+      text-decoration: none;
+    }
+
+    &.prev:hover {
+      transform: translateX(-4px);
+    }
+
+    &.next {
+      margin-left: auto;
+
+      &:hover {
+        transform: translateX(4px);
+      }
+    }
+
+    @media (max-width: 768px) {
+      width: 100%;
+      justify-content: center;
+
+      &.next {
+        margin-left: 0;
+      }
+    }
+  }
 }

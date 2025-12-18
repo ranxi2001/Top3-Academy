@@ -1,41 +1,114 @@
----
-layout: default
----
-<div class="course-document">
-    <aside class="sidebar">
-        <h2>目录</h2>
-        <nav class="lesson-nav">
-            <ul>
-                {% assign current_dir = page.path | split: '/' | first %}
-                {% assign course_pages = site.html_pages | where_exp: "item", "item.path contains current_dir" %}
-                {% for p in course_pages %}
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'zh-CN' }}">
+
+<head>
+    {% include head.html %}
+</head>
+
+<body>
+    {% include header.html %}
+
+    <!-- 侧边栏遮罩层 -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- 课程文档布局 -->
+    <div class="course-document">
+        <aside class="sidebar" id="sidebar">
+            <h2>目录</h2>
+            <nav class="lesson-nav">
+                <ul>
+                    {% assign current_dir = page.path | split: '/' | first %}
+                    {% assign course_pages = site.html_pages | where_exp: "item", "item.path contains current_dir" %}
+                    {% for p in course_pages %}
                     {% assign p_dir = p.path | split: '/' | first %}
                     {% if p_dir == current_dir and p.name != 'index.md' %}
-                        <li {% if page.url == p.url %}class="active"{% endif %}>
-                            <a href="{{ p.url | relative_url }}">{{ p.title }}</a>
-                        </li>
+                    <li {% if page.url==p.url %}class="active" {% endif %}>
+                        <a href="{{ p.url | relative_url }}">{{ p.title }}</a>
+                    </li>
                     {% endif %}
-                {% endfor %}
-            </ul>
-        </nav>
-    </aside>
-    <main class="content">
-        {{ content | md_to_html }}
+                    {% endfor %}
+                </ul>
+            </nav>
+        </aside>
 
-        <div class="lesson-footer">
-            <p>最后于 {{ page.date | date: "%Y年%m月%d日" }} 更新</p>
-            {% if page.edit_link %}
-            <a href="{{ page.edit_link }}" class="edit-link">编辑此页</a>
-            {% endif %}
-        </div>
+        <main class="content">
+            {{ content | md_to_html }}
 
-        <div class="pagination">
-            {% if page.previous.url %}
-            <a href="{{ page.previous.url | relative_url }}" class="prev">&laquo; {{ page.previous.title }}</a>
-            {% endif %}
-            {% if page.next.url %}
-            <a href="{{ page.next.url | relative_url }}" class="next">{{ page.next.title }} &raquo;</a>
-            {% endif %}
-        </div>
-    </main>
-</div>
+            <div class="lesson-footer">
+                <p>最后更新于 {{ page.date | date: "%Y年%m月%d日" }}</p>
+                {% if page.edit_link %}
+                <a href="{{ page.edit_link }}" class="edit-link">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                    编辑此页
+                </a>
+                {% endif %}
+            </div>
+
+            <div class="pagination">
+                {% if page.previous.url %}
+                <a href="{{ page.previous.url | relative_url }}" class="prev">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                    {{ page.previous.title }}
+                </a>
+                {% endif %}
+                {% if page.next.url %}
+                <a href="{{ page.next.url | relative_url }}" class="next">
+                    {{ page.next.title }}
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+                {% endif %}
+            </div>
+        </main>
+    </div>
+
+    <!-- 侧边栏切换按钮 -->
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="切换目录">
+        <svg viewBox="0 0 24 24" fill="white">
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+        </svg>
+    </button>
+
+    {% include footer.html %}
+    {% include scripts.html %}
+
+    <!-- 侧边栏脚本 -->
+    <script>
+        (function () {
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                sidebarOverlay.classList.toggle('visible');
+                document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
+            }
+
+            function closeSidebar() {
+                sidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('visible');
+                document.body.style.overflow = '';
+            }
+
+            if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+            if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
+
+            document.querySelectorAll('.lesson-nav a').forEach(link => {
+                link.addEventListener('click', closeSidebar);
+            });
+
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape') closeSidebar();
+            });
+        })();
+    </script>
+</body>
+
+</html>
