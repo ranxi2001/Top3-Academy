@@ -1,94 +1,153 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="zh-CN">
+
 <head>
-  <!-- 设置字符集和浏览器兼容性 -->
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 字符集和浏览器兼容性 -->
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 
-  <!-- 动态生成页面标题，显示站点标题和页面标题 -->
-  <title>OnePolloWeb3 Academy | 智能合约课程</title>
+<!-- SEO Meta Tags -->
+<meta name="description" content="Web3顶级学习平台 | 智能合约开发、链上交互和前端DApp开发实战教程，从入门到精通！">
+<meta name="keywords" content="Web3, 区块链, 智能合约, Solidity, DApp, 去中心化应用, 教程">
+<meta name="author" content="Top3 Academy">
 
-  <!-- 引入站点样式表，并使用 GitHub 的构建版本进行缓存控制 -->
-  <link rel="stylesheet" href="/assets/css/main.css">
+<!-- Open Graph -->
+<meta property="og:title" content="智能合约课程 | Top3 Academy">
+<meta property="og:description" content="Web3顶级学习平台 | 智能合约开发、链上交互和前端DApp开发实战教程，从入门到精通！">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://learnweb3.top/smart_contract/">
 
-  <!-- 添加语法高亮 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+<!-- 页面标题 -->
+<title>智能合约课程 | Top3 Academy</title>
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/assets/img/logo.png">
+<link rel="apple-touch-icon" href="/assets/img/logo.png">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- 站点样式表 -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!-- 语法高亮 - Prism.js -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" id="prism-light">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+    id="prism-dark" disabled>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+<!-- 主题初始化脚本 (避免闪烁) -->
+<script>
+    (function () {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    })();
+</script>
 </head>
-<body>
-<!-- 页头部分，包含品牌标识和导航栏 -->
-<header>
-  <div class="container">
-    <div id="branding">
-      <h1><a href="/">OnePolloWeb3 Academy</a></h1>
-    </div>
-    <!-- 导航栏，包含智能合约、链上交互、前端交互的链接 -->
-    <nav>
-      <ul>
-        <li><a href="/smart_contract/">智能合约</a></li>
-        <li><a href="/chain_interaction/">链上交互</a></li>
-        <li><a href="/Front-end_Interaction/">前端交互</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
 
-<!-- 主内容区域 -->
-<main>
-  <div class="container">
-    <!-- 动态插入页面内容 -->
-    <div class="course-document">
-    <aside class="sidebar">
-        <h2>目录</h2>
-        <nav class="lesson-nav">
+<body>
+    <header>
+    <div class="container">
+        <div id="branding">
+            <a href="/" class="logo-link">
+                <img src="/assets/img/logo.png" alt="Top3 Academy Logo" class="logo">
+                <span class="site-title">Top3 Academy</span>
+            </a>
+        </div>
+
+        <nav id="mainNav">
             <ul>
-                
-                
-                
-                    
-                    
-                        <li >
-                            <a href="/smart_contract/Hardhat%E5%AE%9E%E6%88%98%E7%AF%87%E2%80%94%E2%80%94%E4%BB%8E%E9%9B%B6%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE.html">Hardhat实战篇——从零创建一个项目</a>
-                        </li>
-                    
-                
-                    
-                    
-                        <li >
-                            <a href="/smart_contract/Hardhat%E5%AE%9E%E6%88%98%E7%AF%87%E2%80%94%E2%80%94%E5%B0%86%E5%90%88%E7%BA%A6%E9%83%A8%E7%BD%B2%E5%88%B0%E6%B5%8B%E8%AF%95%E7%BD%91.html">Hardhat实战篇——将合约部署到测试网</a>
-                        </li>
-                    
-                
-                    
-                    
-                        <li >
-                            <a href="/smart_contract/Hardhat%E6%95%99%E7%A8%8B.html">Hardhat教程</a>
-                        </li>
-                    
-                
-                    
-                    
-                
-                    
-                    
-                        <li >
-                            <a href="/smart_contract/%E9%98%85%E8%AF%BB%E4%BC%98%E7%A7%80%E7%9A%84%E5%90%88%E7%BA%A6%E4%BB%A3%E7%A0%81.html">阅读优秀的合约代码</a>
-                        </li>
-                    
-                
+                <li><a href="/smart_contract/">智能合约</a></li>
+                <li><a href="/chain_interaction/">链上交互</a></li>
+                <li><a href="/Front-end_Interaction/">前端交互</a></li>
             </ul>
         </nav>
-    </aside>
-    <main class="content">
-        <h1 id="欢迎来到智能合约课程">欢迎来到智能合约课程</h1>
+
+        <div class="header-actions">
+            <!-- 主题切换按钮 -->
+            <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                <svg class="sun-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z" />
+                </svg>
+                <svg class="moon-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z" />
+                </svg>
+            </button>
+
+            <!-- 汉堡菜单按钮 (移动端) -->
+            <button class="hamburger" id="menuToggle" aria-label="菜单">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+    <!-- 侧边栏遮罩层 -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- 课程文档布局 -->
+    <div class="course-document">
+        <aside class="sidebar" id="sidebar">
+            <h2>目录</h2>
+            <nav class="lesson-nav">
+                <ul>
+                    
+                    
+                    
+                    
+                    
+                    <li >
+                        <a href="/smart_contract/Hardhat%E5%AE%9E%E6%88%98%E7%AF%87%E2%80%94%E2%80%94%E4%BB%8E%E9%9B%B6%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE.html">Hardhat实战篇——从零创建一个项目</a>
+                    </li>
+                    
+                    
+                    
+                    
+                    <li >
+                        <a href="/smart_contract/Hardhat%E5%AE%9E%E6%88%98%E7%AF%87%E2%80%94%E2%80%94%E5%B0%86%E5%90%88%E7%BA%A6%E9%83%A8%E7%BD%B2%E5%88%B0%E6%B5%8B%E8%AF%95%E7%BD%91.html">Hardhat实战篇——将合约部署到测试网</a>
+                    </li>
+                    
+                    
+                    
+                    
+                    <li >
+                        <a href="/smart_contract/Hardhat%E6%95%99%E7%A8%8B.html">Hardhat教程</a>
+                    </li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <li >
+                        <a href="/smart_contract/%E9%98%85%E8%AF%BB%E4%BC%98%E7%A7%80%E7%9A%84%E5%90%88%E7%BA%A6%E4%BB%A3%E7%A0%81.html">阅读优秀的合约代码</a>
+                    </li>
+                    
+                    
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <h1 id="欢迎来到智能合约课程">欢迎来到智能合约课程</h1>
 
 <h2 id="入门">入门：</h2>
 
 <p>看这个 WTF Academy</p>
 
 <ul>
-  <li>开发者的 Web3 开源大学 ：<a href='https://www.wtf.academy/'><a href='https://www.wtf.academy/'>https://www.wtf.academy/</a></a></li>
+  <li>开发者的 Web3 开源大学 ：<a href='https://www.wtf.academy/'>https://www.wtf.academy/</a></li>
 </ul>
 
 <h2 id="进阶">进阶：</h2>
@@ -98,7 +157,7 @@
 <ul>
   <li>从僵尸web3开始学智能合约吧！
     <ul>
-      <li>链接：<a href='https://cryptozombies.io/zh/solidity'><a href='https://cryptozombies.io/zh/solidity'>https://cryptozombies.io/zh/solidity</a></a></li>
+      <li>链接：<a href='https://cryptozombies.io/zh/solidity'>https://cryptozombies.io/zh/solidity</a></li>
     </ul>
   </li>
 </ul>
@@ -119,7 +178,7 @@
             <tr>
               <td>[DApp设计与开发 课程笔记（二）：remix</td>
               <td>hardhat</td>
-              <td>测试驱动开发 - 孤飞 - 博客园 (cnblogs.com)](<a href='https://www.cnblogs.com/ranxi169/p/18274322)'><a href='https://www.cnblogs.com/ranxi169/p/18274322)'>https://www.cnblogs.com/ranxi169/p/18274322)</a></a></td>
+              <td>测试驱动开发 - 孤飞 - 博客园 (cnblogs.com)](<a href='https://www.cnblogs.com/ranxi169/p/18274322)'>https://www.cnblogs.com/ranxi169/p/18274322)</a></td>
             </tr>
           </tbody>
         </table>
@@ -129,7 +188,7 @@
           <tbody>
             <tr>
               <td>[DApp设计与开发 课程笔记（三）：erc20</td>
-              <td>erc721 - 孤飞 - 博客园 (cnblogs.com)](<a href='https://www.cnblogs.com/ranxi169/p/18274547)'><a href='https://www.cnblogs.com/ranxi169/p/18274547)'>https://www.cnblogs.com/ranxi169/p/18274547)</a></a></td>
+              <td>erc721 - 孤飞 - 博客园 (cnblogs.com)](<a href='https://www.cnblogs.com/ranxi169/p/18274547)'>https://www.cnblogs.com/ranxi169/p/18274547)</a></td>
             </tr>
           </tbody>
         </table>
@@ -185,29 +244,117 @@
 <h2 id="圆满">圆满：</h2>
 
 <ul>
-  <li>用代码例子来学Solidity：<a href='https://github.com/Web3-Club/solidity-by-example_Chinese?tab=readme-ov-file'><a href='https://github.com/Web3-Club/solidity-by-example_Chinese?tab=readme-ov-file'>https://github.com/Web3-Club/solidity-by-example_Chinese?tab=readme-ov-file</a></a></li>
+  <li>用代码例子来学Solidity：<a href='https://github.com/Web3-Club/solidity-by-example_Chinese?tab=readme-ov-file'>https://github.com/Web3-Club/solidity-by-example_Chinese?tab=readme-ov-file</a></li>
 </ul>
 
 
-        <div class="lesson-footer">
-            <p>最后于  更新</p>
-            
-        </div>
+            <div class="lesson-footer">
+                <p>最后更新于 </p>
+                
+            </div>
 
-        <div class="pagination">
-            
-            
-        </div>
-    </main>
-</div>
-  </div>
-</main>
+            <div class="pagination">
+                
+                
+            </div>
+        </main>
+    </div>
 
-<!-- 页脚部分，显示版权信息和当前年份 -->
-<footer>
-  <div class="container">
-    <p>&copy; 2024 OnePolloWeb3 Academy. Reprinting is prohibited. All rights reserved.</p>
-  </div>
+    <!-- 侧边栏切换按钮 -->
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="切换目录">
+        <svg viewBox="0 0 24 24" fill="white">
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+        </svg>
+    </button>
+
+    <footer>
+    <div class="container">
+        <p>&copy; 2025 Top3 Academy. All rights reserved. | <a
+                href="https://learnweb3.top">learnweb3.top</a></p>
+    </div>
 </footer>
+    <script>
+    (function () {
+        // 主题切换
+        const themeToggle = document.getElementById('themeToggle');
+        const prismLight = document.getElementById('prism-light');
+        const prismDark = document.getElementById('prism-dark');
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            if (theme === 'dark') {
+                if (prismLight) prismLight.disabled = true;
+                if (prismDark) prismDark.disabled = false;
+            } else {
+                if (prismLight) prismLight.disabled = false;
+                if (prismDark) prismDark.disabled = true;
+            }
+        }
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        setTheme(savedTheme);
+
+        if (themeToggle) {
+            themeToggle.addEventListener('click', function () {
+                const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+                setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+            });
+        }
+
+        // 移动端菜单
+        const menuToggle = document.getElementById('menuToggle');
+        const mainNav = document.getElementById('mainNav');
+
+        if (menuToggle && mainNav) {
+            menuToggle.addEventListener('click', function () {
+                this.classList.toggle('active');
+                mainNav.classList.toggle('open');
+                document.body.style.overflow = mainNav.classList.contains('open') ? 'hidden' : '';
+            });
+
+            mainNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    menuToggle.classList.remove('active');
+                    mainNav.classList.remove('open');
+                    document.body.style.overflow = '';
+                });
+            });
+        }
+    })();
+</script>
+
+    <!-- 侧边栏脚本 -->
+    <script>
+        (function () {
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                sidebarOverlay.classList.toggle('visible');
+                document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
+            }
+
+            function closeSidebar() {
+                sidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('visible');
+                document.body.style.overflow = '';
+            }
+
+            if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+            if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
+
+            document.querySelectorAll('.lesson-nav a').forEach(link => {
+                link.addEventListener('click', closeSidebar);
+            });
+
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape') closeSidebar();
+            });
+        })();
+    </script>
 </body>
+
 </html>
