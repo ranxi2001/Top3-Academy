@@ -16,7 +16,7 @@
 <meta property="og:title" content="深入理解链上交互：签名、广播与授权机制 | Top3 Academy">
 <meta property="og:description" content="Web3顶级学习平台 | 智能合约开发、链上交互和前端DApp开发实战教程，从入门到精通！">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://learnweb3.top/chain_interaction/signing_authorization.html">
+<meta property="og:url" content="http://localhost:4000/chain_interaction/signing_authorization.html">
 
 <!-- 页面标题 -->
 <title>深入理解链上交互：签名、广播与授权机制 | Top3 Academy</title>
@@ -351,102 +351,55 @@
 <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 
-    // Unified Mermaid Loader
-    (function () {
-        async function initMermaid() {
-            // Avoid running twice
-            if (window._mermaidInitialized) return;
-            window._mermaidInitialized = true;
+    // Get theme colors from CSS variables
+    const style = getComputedStyle(document.body);
+    const primary = style.getPropertyValue('--primary').trim();
+    // We use var() for colors that change between themes to ensure dynamic switching works
 
-            // 1. Find all potential Mermaid blocks
-            // Strategy: Look for 'language-mermaid' class OR content starting with keywords
-            const codeBlocks = document.querySelectorAll('pre code');
+    mermaid.initialize({
+        startOnLoad: false,
+        theme: 'base',
+        themeVariables: {
+            fontFamily: 'Inter, sans-serif',
+            primaryColor: primary,
+            primaryTextColor: '#fff', // Always white for primary filled elements
+            primaryBorderColor: primary,
+            lineColor: 'var(--text-primary)', // Dynamic text color
+            secondaryColor: 'var(--bg-secondary)', // Dynamic background
+            tertiaryColor: 'var(--bg-tertiary)', // Dynamic tertiary background
 
-            const keywords = ['sequenceDiagram', 'mindmap', 'graph', 'flowchart', 'classDiagram', 'gantt', 'pie'];
-            const mermaidNodes = [];
-
-            codeBlocks.forEach(block => {
-                let isMermaid = false;
-                const text = block.textContent.trim();
-
-                // Check class
-                if (block.classList.contains('language-mermaid') || block.closest('.language-mermaid')) {
-                    isMermaid = true;
-                }
-                // Check content keywords
-                else {
-                    for (const kw of keywords) {
-                        if (text.startsWith(kw)) {
-                            isMermaid = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (isMermaid) {
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.style.textAlign = 'center';
-                    div.style.background = 'var(--bg-tertiary)';
-                    div.style.padding = '20px';
-                    div.style.borderRadius = '12px';
-                    div.textContent = text;
-                    mermaidNodes.push({ block, div });
-                }
-            });
-
-            // 2. Perform replacements
-            mermaidNodes.forEach(({ block, div }) => {
-                const pre = block.closest('pre');
-                const wrapper = pre.closest('div.highlighter-rouge, div.highlight');
-                if (wrapper) {
-                    wrapper.replaceWith(div);
-                } else if (pre) {
-                    pre.replaceWith(div);
-                } else {
-                    block.replaceWith(div);
-                }
-            });
-
-            // 3. Initialize and Run Mermaid
-            // We use var() for colors that change between themes to ensure dynamic switching works
-            const style = getComputedStyle(document.body);
-            const primary = style.getPropertyValue('--primary').trim();
-
-            mermaid.initialize({
-                startOnLoad: false,
-                theme: 'base',
-                themeVariables: {
-                    fontFamily: 'Inter, sans-serif',
-                    primaryColor: primary,
-                    primaryTextColor: '#fff',
-                    primaryBorderColor: primary,
-                    lineColor: 'var(--text-primary)',
-                    secondaryColor: 'var(--bg-secondary)',
-                    tertiaryColor: 'var(--bg-tertiary)',
-                    textColor: 'var(--text-primary)',
-                    signalTextColor: 'var(--text-primary)',
-                    actorTextColor: '#fff',
-                    noteTextColor: 'var(--text-primary)',
-                    loopTextColor: 'var(--text-primary)',
-                    activationBorderColor: primary
-                }
-            });
-
-            const allMermaidDivs = document.querySelectorAll('.mermaid');
-            if (allMermaidDivs.length > 0) {
-                await mermaid.run({
-                    querySelector: '.mermaid'
-                });
-            }
+            // Fix for dynamic light/dark mode switching
+            textColor: 'var(--text-primary)',
+            signalTextColor: 'var(--text-primary)',
+            actorTextColor: '#fff', // Actor text inside the purple box stays white
+            noteTextColor: 'var(--text-primary)',
+            loopTextColor: 'var(--text-primary)',
+            activationBorderColor: primary
         }
+    });
 
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initMermaid);
-        } else {
-            initMermaid();
+    document.addEventListener('DOMContentLoaded', async () => {
+        // 1. Convert Markdown/Jekyll code blocks to Mermaid divs
+        const mermaidBlocks = document.querySelectorAll('pre code.language-mermaid, .language-mermaid pre code');
+        mermaidBlocks.forEach(block => {
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.style.textAlign = 'center';
+            div.style.background = 'var(--bg-tertiary)';
+            div.style.padding = '20px';
+            div.style.borderRadius = '12px';
+            div.textContent = block.textContent;
+            block.parentElement.replaceWith(div);
+        });
+
+        // 2. Run Mermaid on ALL .mermaid blocks (both converted ones and manual ones)
+        const allMermaidDivs = document.querySelectorAll('.mermaid');
+        if (allMermaidDivs.length > 0) {
+            await mermaid.run({
+                querySelector: '.mermaid'
+            });
         }
-    })();
+    });
 </script>
 
     <!-- 侧边栏脚本 -->
