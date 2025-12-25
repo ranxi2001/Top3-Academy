@@ -66,6 +66,7 @@
                 <li><a href="/smart_contract/">智能合约</a></li>
                 <li><a href="/chain_interaction/">链上交互</a></li>
                 <li><a href="/Front-end_Interaction/">前端交互</a></li>
+                <li><a href="/friends/">友情链接</a></li>
             </ul>
         </nav>
 
@@ -506,7 +507,8 @@
     <footer>
     <div class="container">
         <p>&copy; 2025 Top3 Academy. All rights reserved. | <a
-                href="https://learnweb3.top">learnweb3.top</a></p>
+                href="https://learnweb3.top">learnweb3.top</a> | Made by <a href="https://x.com/Onefly"
+                target="_blank">Onefly</a></p>
     </div>
 </footer>
     <script>
@@ -558,6 +560,52 @@
             });
         }
     })();
+</script>
+
+<!-- Mermaid JS -->
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+    // Get theme colors from CSS variables
+    const style = getComputedStyle(document.body);
+    const primary = style.getPropertyValue('--primary').trim();
+    const secondary = style.getPropertyValue('--bg-secondary').trim();
+    const textPrimary = style.getPropertyValue('--text-primary').trim();
+
+    mermaid.initialize({
+        startOnLoad: false,
+        theme: 'base',
+        themeVariables: {
+            fontFamily: 'Inter, sans-serif',
+            primaryColor: primary,
+            primaryTextColor: '#fff',
+            primaryBorderColor: primary,
+            lineColor: textPrimary,
+            secondaryColor: secondary,
+            tertiaryColor: '#f1f5f9'
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        const mermaidBlocks = document.querySelectorAll('pre code.language-mermaid');
+        if (mermaidBlocks.length > 0) {
+            mermaidBlocks.forEach(block => {
+                const div = document.createElement('div');
+                div.className = 'mermaid';
+                div.style.textAlign = 'center'; // Center the diagram
+                div.style.background = 'var(--bg-tertiary)'; // Add subtle background
+                div.style.padding = '20px';
+                div.style.borderRadius = '12px';
+                div.textContent = block.textContent;
+                // Replace pre element with the new div
+                block.parentElement.replaceWith(div);
+            });
+
+            await mermaid.run({
+                querySelector: '.mermaid'
+            });
+        }
+    });
 </script>
 
     <!-- 侧边栏脚本 -->
