@@ -53,44 +53,100 @@
 <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 
-    // Get theme colors from CSS variables
-    const style = getComputedStyle(document.body);
-    const primary = style.getPropertyValue('--primary').trim();
-    const secondary = style.getPropertyValue('--bg-secondary').trim();
-    const textPrimary = style.getPropertyValue('--text-primary').trim();
+    // Unified Mermaid Loader
+    (function () {
+        async function initMermaid() {
+            // Avoid running twice
+            if (window._mermaidInitialized) return;
+            window._mermaidInitialized = true;
 
-    mermaid.initialize({
-        startOnLoad: false,
-        theme: 'base',
-        themeVariables: {
-            fontFamily: 'Inter, sans-serif',
-            primaryColor: primary,
-            primaryTextColor: '#fff',
-            primaryBorderColor: primary,
-            lineColor: textPrimary,
-            secondaryColor: secondary,
-            tertiaryColor: '#f1f5f9'
-        }
-    });
+            // 1. Find all potential Mermaid blocks
+            // Strategy: Look for 'language-mermaid' class OR content starting with keywords
+            const codeBlocks = document.querySelectorAll('pre code');
 
-    document.addEventListener('DOMContentLoaded', async () => {
-        const mermaidBlocks = document.querySelectorAll('pre code.language-mermaid');
-        if (mermaidBlocks.length > 0) {
-            mermaidBlocks.forEach(block => {
-                const div = document.createElement('div');
-                div.className = 'mermaid';
-                div.style.textAlign = 'center'; // Center the diagram
-                div.style.background = 'var(--bg-tertiary)'; // Add subtle background
-                div.style.padding = '20px';
-                div.style.borderRadius = '12px';
-                div.textContent = block.textContent;
-                // Replace pre element with the new div
-                block.parentElement.replaceWith(div);
+            const keywords = ['sequenceDiagram', 'mindmap', 'graph', 'flowchart', 'classDiagram', 'gantt', 'pie'];
+            const mermaidNodes = [];
+
+            codeBlocks.forEach(block => {
+                let isMermaid = false;
+                const text = block.textContent.trim();
+
+                // Check class
+                if (block.classList.contains('language-mermaid') || block.closest('.language-mermaid')) {
+                    isMermaid = true;
+                }
+                // Check content keywords
+                else {
+                    for (const kw of keywords) {
+                        if (text.startsWith(kw)) {
+                            isMermaid = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (isMermaid) {
+                    const div = document.createElement('div');
+                    div.className = 'mermaid';
+                    div.style.textAlign = 'center';
+                    div.style.background = 'var(--bg-tertiary)';
+                    div.style.padding = '20px';
+                    div.style.borderRadius = '12px';
+                    div.textContent = text;
+                    mermaidNodes.push({ block, div });
+                }
             });
 
-            await mermaid.run({
-                querySelector: '.mermaid'
+            // 2. Perform replacements
+            mermaidNodes.forEach(({ block, div }) => {
+                const pre = block.closest('pre');
+                const wrapper = pre.closest('div.highlighter-rouge, div.highlight');
+                if (wrapper) {
+                    wrapper.replaceWith(div);
+                } else if (pre) {
+                    pre.replaceWith(div);
+                } else {
+                    block.replaceWith(div);
+                }
             });
+
+            // 3. Initialize and Run Mermaid
+            // We use var() for colors that change between themes to ensure dynamic switching works
+            const style = getComputedStyle(document.body);
+            const primary = style.getPropertyValue('--primary').trim();
+
+            mermaid.initialize({
+                startOnLoad: false,
+                theme: 'base',
+                themeVariables: {
+                    fontFamily: 'Inter, sans-serif',
+                    primaryColor: primary,
+                    primaryTextColor: '#fff',
+                    primaryBorderColor: primary,
+                    lineColor: 'var(--text-primary)',
+                    secondaryColor: 'var(--bg-secondary)',
+                    tertiaryColor: 'var(--bg-tertiary)',
+                    textColor: 'var(--text-primary)',
+                    signalTextColor: 'var(--text-primary)',
+                    actorTextColor: '#fff',
+                    noteTextColor: 'var(--text-primary)',
+                    loopTextColor: 'var(--text-primary)',
+                    activationBorderColor: primary
+                }
+            });
+
+            const allMermaidDivs = document.querySelectorAll('.mermaid');
+            if (allMermaidDivs.length > 0) {
+                await mermaid.run({
+                    querySelector: '.mermaid'
+                });
+            }
         }
-    });
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initMermaid);
+        } else {
+            initMermaid();
+        }
+    })();
 </script>

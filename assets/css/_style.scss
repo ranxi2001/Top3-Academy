@@ -552,3 +552,93 @@ hr {
         margin-bottom: 40px;
     }
 }
+
+// Mermaid Diagram Overrides (Force Text Contrast)
+.mermaid {
+    background: var(--bg-tertiary) !important;
+
+    svg {
+
+        // ============================================
+        // 1. GLOBAL TEXT (Adaptive)
+        // ============================================
+        text {
+            fill: var(--text-primary) !important;
+            stroke: none !important;
+            font-family: 'Inter', sans-serif !important;
+        }
+
+        // Tspans often inherit poorly, force them too
+        tspan {
+            fill: inherit !important;
+            stroke: none !important;
+        }
+
+        // ============================================
+        // 2. SEQUENCE DIAGRAM
+        // ============================================
+
+        // Actors (The "6 boxes")
+        // Target specifically the rects inside actor groups
+        g.actor rect,
+        rect.actor {
+            fill: #f8fafc !important; // Light Grey
+            stroke: var(--primary) !important;
+        }
+
+        // Force text inside actors to be Dark
+        g.actor text,
+        text.actor,
+        .actor-man text {
+            fill: #1e293b !important;
+        }
+
+        // Notes
+        g.note rect,
+        rect.note {
+            fill: #fffbeb !important; // Light Yellow
+            stroke: var(--primary) !important;
+        }
+
+        g.note text,
+        .noteText {
+            fill: #1e293b !important; // Dark Text
+        }
+
+        // Lines & Loops
+        .messageLine0,
+        .messageLine1,
+        .loopLine,
+        .actor-line {
+            stroke: var(--text-primary) !important;
+        }
+
+        rect.loop {
+            fill: var(--bg-card) !important;
+            stroke: var(--primary) !important;
+        }
+
+        // ============================================
+        // 3. MINDMAPS
+        // ============================================
+
+        // Mindmap Node Shapes (Rects, Circles, Polygons)
+        // We generally keep their default pastel colors (rendered by Mermaid inline),
+        // BUT we MUST ensure the text on top of them is Dark.
+
+        // C. MINDMAPS (Pastel Colors)
+        .mindmap-node text {
+            fill: #1e293b !important; // Dark Text on pastel nodes
+        }
+
+        // Force root node to distinct color if needed, but standard dark text works on light blue too.
+
+        // ============================================
+        // 4. MARKERS (Arrows)
+        // ============================================
+        marker {
+            fill: var(--text-primary) !important;
+            stroke: var(--text-primary) !important;
+        }
+    }
+}

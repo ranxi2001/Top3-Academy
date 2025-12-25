@@ -45,7 +45,7 @@ description: Top3 Academy - Web3顶级学习平台，提供智能合约开发、
     <div class="roadmap-section">
         <h2>🗺️ Web3 技术路线图</h2>
         
-<pre><code class="language-mermaid">
+<div class="mermaid">
 mindmap
   root((Web3技术map))
     智能合约
@@ -63,6 +63,6 @@ mindmap
         next.js
       交互UI
         figma
-</code></pre>
+</div>
     </div>
 </div>
