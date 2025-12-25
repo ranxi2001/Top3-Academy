@@ -48,3 +48,49 @@
         }
     })();
 </script>
+
+<!-- Mermaid JS -->
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+    // Get theme colors from CSS variables
+    const style = getComputedStyle(document.body);
+    const primary = style.getPropertyValue('--primary').trim();
+    const secondary = style.getPropertyValue('--bg-secondary').trim();
+    const textPrimary = style.getPropertyValue('--text-primary').trim();
+
+    mermaid.initialize({
+        startOnLoad: false,
+        theme: 'base',
+        themeVariables: {
+            fontFamily: 'Inter, sans-serif',
+            primaryColor: primary,
+            primaryTextColor: '#fff',
+            primaryBorderColor: primary,
+            lineColor: textPrimary,
+            secondaryColor: secondary,
+            tertiaryColor: '#f1f5f9'
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        const mermaidBlocks = document.querySelectorAll('pre code.language-mermaid');
+        if (mermaidBlocks.length > 0) {
+            mermaidBlocks.forEach(block => {
+                const div = document.createElement('div');
+                div.className = 'mermaid';
+                div.style.textAlign = 'center'; // Center the diagram
+                div.style.background = 'var(--bg-tertiary)'; // Add subtle background
+                div.style.padding = '20px';
+                div.style.borderRadius = '12px';
+                div.textContent = block.textContent;
+                // Replace pre element with the new div
+                block.parentElement.replaceWith(div);
+            });
+
+            await mermaid.run({
+                querySelector: '.mermaid'
+            });
+        }
+    });
+</script>

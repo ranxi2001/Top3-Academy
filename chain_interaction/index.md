@@ -15,3 +15,4 @@ date: 2024-10-10
   - ![](./attachment/wtfethers.js教程.png)
 
 - web3.js：https://web3js.readthedocs.io/en/v1.10.0/
+- [深入理解链上交互：签名、广播与授权机制](./signing_authorization.md)
