@@ -484,6 +484,16 @@ CounterDynamic address: 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
                 
             </div>
         </main>
+
+        <!-- 右侧目录 -->
+        <aside class="toc" id="toc">
+            <h2>本页目录</h2>
+            <nav class="toc-nav">
+                <ul class="toc-list" id="tocList">
+                    <!-- 目录项将由 JavaScript 动态生成 -->
+                </ul>
+            </nav>
+        </aside>
     </div>
 
     <!-- 侧边栏切换按钮 -->
@@ -653,7 +663,7 @@ CounterDynamic address: 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
     })();
 </script>
 
-    <!-- 侧边栏脚本 -->
+    <!-- 侧边栏和目录脚本 -->
     <script>
         (function () {
             const sidebar = document.getElementById('sidebar');
@@ -680,8 +690,95 @@ CounterDynamic address: 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
             });
 
             document.addEventListener('keydown', e => {
-                if (e.key === 'Escape') closeSidebar();
+                if (e.key === 'Escape') closeSidebar;
             });
+
+            // ============================================
+            // TOC (右侧目录) 生成和高亮
+            // ============================================
+            const content = document.querySelector('.content');
+            const tocList = document.getElementById('tocList');
+            const toc = document.getElementById('toc');
+
+            if (content && tocList) {
+                // 提取所有 h2 和 h3 标题
+                const headings = content.querySelectorAll('h2, h3');
+
+                if (headings.length > 0) {
+                    headings.forEach((heading, index) => {
+                        // 为标题添加 ID（如果没有的话）
+                        if (!heading.id) {
+                            heading.id = `heading-${index}`;
+                        }
+
+                        // 创建目录项
+                        const li = document.createElement('li');
+                        li.className = `toc-item toc-${heading.tagName.toLowerCase()}`;
+
+                        const a = document.createElement('a');
+                        a.className = 'toc-link';
+                        a.href = `#${heading.id}`;
+                        a.textContent = heading.textContent;
+                        a.dataset.target = heading.id;
+
+                        // 平滑滚动
+                        a.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            // 更新 URL hash
+                            history.pushState(null, null, `#${heading.id}`);
+                        });
+
+                        li.appendChild(a);
+                        tocList.appendChild(li);
+                    });
+
+                    // 滚动高亮
+                    let throttleTimer;
+                    const throttle = (callback, time) => {
+                        if (throttleTimer) return;
+                        throttleTimer = setTimeout(() => {
+                            callback();
+                            throttleTimer = null;
+                        }, time);
+                    };
+
+                    const highlightTOC = () => {
+                        const scrollPos = window.scrollY + 100; // 偏移量
+                        let currentHeading = null;
+
+                        headings.forEach(heading => {
+                            const top = heading.offsetTop;
+                            if (scrollPos >= top) {
+                                currentHeading = heading;
+                            }
+                        });
+
+                        // 移除所有高亮
+                        document.querySelectorAll('.toc-link').forEach(link => {
+                            link.classList.remove('active');
+                        });
+
+                        // 添加当前高亮
+                        if (currentHeading) {
+                            const activeLink = document.querySelector(`.toc-link[data-target="${currentHeading.id}"]`);
+                            if (activeLink) {
+                                activeLink.classList.add('active');
+                            }
+                        }
+                    };
+
+                    window.addEventListener('scroll', () => {
+                        throttle(highlightTOC, 100);
+                    });
+
+                    // 初始高亮
+                    highlightTOC();
+                } else {
+                    // 如果没有标题，隐藏TOC
+                    if (toc) toc.style.display = 'none';
+                }
+            }
         })();
     </script>
 </body>
